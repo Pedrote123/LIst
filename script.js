@@ -92,26 +92,26 @@ function Load_SlideMenu_DragFunction(){
     var MouseHoldInterval;
     var MouseHoldInterval_Time = 0;
 
-    document.addEventListener('mousedown', (e)=>{
+    document.addEventListener('pointerdown', (e)=>{
         e.stopPropagation();
 
         InitialX = e.clientX;
 
-        if (InitialX < 150){
+        if (InitialX < 200){
             MouseHoldInterval = setInterval(()=>{
                 MouseHoldInterval_Time += 100;
             }, 100)
         }
     });
 
-    document.addEventListener('mouseup', (e)=>{
+    document.addEventListener('pointerup', (e)=>{
         e.stopPropagation();
 
         FinalX = e.clientX;
 
         clearInterval(MouseHoldInterval);
         
-        if (MouseHoldInterval_Time > 100){
+        if (MouseHoldInterval_Time > 50){
             if ((FinalX - InitialX) > 50){
                 Load_SlideMenu_ClickFunction();
             }
