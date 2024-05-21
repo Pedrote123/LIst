@@ -92,33 +92,65 @@ function Load_SlideMenu_DragFunction(){
     var MouseHoldInterval;
     var MouseHoldInterval_Time = 0;
 
-    document.addEventListener('pointerdown', (e)=>{
-        e.stopPropagation();
+    if (screen.width < 800){
+        document.addEventListener('touchstart', (e)=>{
+            e.stopPropagation();
 
-        InitialX = e.clientX;
+            InitialX = e.touches[0].clientX;
 
-        if (InitialX < 200){
-            MouseHoldInterval = setInterval(()=>{
-                MouseHoldInterval_Time += 100;
-            }, 100)
-        }
-    });
-
-    document.addEventListener('pointerup', (e)=>{
-        e.stopPropagation();
-
-        FinalX = e.clientX;
-
-        clearInterval(MouseHoldInterval);
-        
-        if (MouseHoldInterval_Time > 50){
-            if ((FinalX - InitialX) > 50){
-                Load_SlideMenu_ClickFunction();
+            if (InitialX < 200){
+                MouseHoldInterval = setInterval(()=>{
+                    MouseHoldInterval_Time += 100;
+                }, 100)
             }
-        }
+        });
 
-        MouseHoldInterval_Time = 0;
-    })
+        document.addEventListener('touchend', (e)=>{
+            e.stopPropagation();
+
+            FinalX = e.changedTouches[0].clientX;
+
+            clearInterval(MouseHoldInterval);
+            
+            if (MouseHoldInterval_Time > 50){
+                if ((FinalX - InitialX) > 50){
+                    Load_SlideMenu_ClickFunction();
+                }
+            }
+
+            MouseHoldInterval_Time = 0;
+        })
+    } else {
+        document.addEventListener('mousedown', (e)=>{
+            e.stopPropagation();
+
+            InitialX = e.clientX;
+
+            if (InitialX < 200){
+                MouseHoldInterval = setInterval(()=>{
+                    MouseHoldInterval_Time += 100;
+                }, 100)
+            }
+        });
+
+        document.addEventListener('mouseup', (e)=>{
+            e.stopPropagation();
+
+            FinalX = e.clientX;
+
+            clearInterval(MouseHoldInterval);
+            
+            if (MouseHoldInterval_Time > 50){
+                if ((FinalX - InitialX) > 50){
+                    Load_SlideMenu_ClickFunction();
+                }
+            }
+
+            MouseHoldInterval_Time = 0;
+        })
+    }
+
+
 
 }
 
