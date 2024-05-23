@@ -32,8 +32,12 @@ function Load_PageFunctions(){
 
     Load_SlideMenu_Functions();
 
-    Create_NewTask_Function();
+    document.getElementById('NavBar_NewTaskButton').addEventListener('click', (e)=>{
+        e.stopPropagation();
+        Create_NewTask_Function();
+    });
 }
+
 
 function Load_SlideMenu_Functions(){
     document.getElementById('NavBar_SideMenuIcon').addEventListener('click', (e)=>{
@@ -44,118 +48,68 @@ function Load_SlideMenu_Functions(){
     Load_SlideMenu_DragFunction();
 }
 
-function Load_SlideMenu_ClickFunction(){
-    var SideMenu = null;
-    var SideMenu_ScreenFilter = null;
 
-    if (!SideMenu){
-        SideMenu = document.createElement('div');
-        SideMenu.id = 'SideMenu';
-        document.body.appendChild(SideMenu);
+function Create_NewTask_Function(){
 
-        SideMenu_ScreenFilter = document.createElement('span');
-        SideMenu_ScreenFilter.id = 'SideMenu_ScreenFilter';
-        document.body.appendChild(SideMenu_ScreenFilter);
+    var NewTask_InputDisplay = null;
+    var NewTask_InputDisplay_ScreenFilter = null;
 
-        //Clarify this mess
-        var Remove_SideMenu = function(){
+    if (!NewTask_InputDisplay){
+        Display_NewTask_InputScreen(NewTask_InputDisplay, NewTask_InputDisplay_ScreenFilter);
+
+        NewTask_InputDisplay = document.getElementById('NewTask_InputDisplay');
+        NewTask_InputDisplay_ScreenFilter = document.getElementById('NewTask_InputDisplay_ScreenFilter');
+
+        var Remove_NewTask_InputDisplay = function(){
+
+            var InputDisplay_LeftBorder = NewTask_InputDisplay.offsetLeft;
+            var InputDisplay_RightBorder = InputDisplay_LeftBorder + NewTask_InputDisplay.offsetWidth;
+            var InputDisplay_TopBorder = NewTask_InputDisplay.offsetTop;
+            var InputDisplay_BottomBorder = InputDisplay_TopBorder + NewTask_InputDisplay.offsetHeight;
+
             document.addEventListener('click', (e)=>{
                 e.stopPropagation();
 
-                if (!(e.target == SideMenu)){
-                    if (SideMenu){
-                        SideMenu.classList.add('Removing');
+                if ((InputDisplay_RightBorder < e.clientX || e.clientX < InputDisplay_LeftBorder || InputDisplay_TopBorder > e.clientY || e.clientY > InputDisplay_BottomBorder) && NewTask_InputDisplay){
+                    document.body.removeChild(NewTask_InputDisplay);
+                    NewTask_InputDisplay = null;
 
-                        setTimeout(()=>{
-                            document.body.removeChild(SideMenu);
-                            SideMenu = null;
-                        }, 500)
-
-                        setTimeout(()=>{
-                            document.body.removeChild(SideMenu_ScreenFilter);
-                            SideMenu_ScreenFilter = null;
-                        }, 300)
-                    }
+                    document.body.removeChild(NewTask_InputDisplay_ScreenFilter);
+                    NewTask_InputDisplay_ScreenFilter = null;
                 }
-            })
-        };
-        setTimeout(()=>{
-            Remove_SideMenu();
-        }, 100)
+            });
+        }
+        Remove_NewTask_InputDisplay();
     }
 }
 
-function Load_SlideMenu_DragFunction(){
-    var InitialX;
-    var FinalX;
+function Display_NewTask_InputScreen(NewTask_InputDisplay, NewTask_InputDisplay_ScreenFilter){
+    NewTask_InputDisplay = document.createElement('div');
+    NewTask_InputDisplay.id = 'NewTask_InputDisplay';
+    document.body.appendChild(NewTask_InputDisplay);
 
-    var MouseHoldInterval;
-    var MouseHoldInterval_Time = 0;
+    NewTask_InputDisplay_ScreenFilter = document.createElement('div');
+    NewTask_InputDisplay_ScreenFilter.id = 'NewTask_InputDisplay_ScreenFilter';
+    document.body.appendChild(NewTask_InputDisplay_ScreenFilter);
 
-    if (screen.width < 800){
-        document.addEventListener('touchstart', (e)=>{
-            e.stopPropagation();
+    var NewTask_Form = document.createElement('form');
+    NewTask_Form.id = 'NewTask_Form';
+    NewTask_InputDisplay.appendChild(NewTask_Form);
 
-            InitialX = e.touches[0].clientX;
+    var NewTask_Text = document.createElement('input');
+    NewTask_Text.type = 'text';
+    NewTask_Text.id = 'NewTask_Text';
+    NewTask_Text.placeholder = 'Introduce your task';
+    NewTask_Form.appendChild(NewTask_Text);
 
-            if (InitialX < 200){
-                MouseHoldInterval = setInterval(()=>{
-                    MouseHoldInterval_Time += 100;
-                }, 100)
-            }
-        });
+    var NewTask_Date = document.createElement('input');
+    NewTask_Date.type = 'date';
+    NewTask_Date.id = 'NewTask_Date';
+    NewTask_Form.appendChild(NewTask_Date);
 
-        document.addEventListener('touchend', (e)=>{
-            e.stopPropagation();
-
-            FinalX = e.changedTouches[0].clientX;
-
-            clearInterval(MouseHoldInterval);
-            
-            if (MouseHoldInterval_Time > 50){
-                if ((FinalX - InitialX) > 50){
-                    Load_SlideMenu_ClickFunction();
-                }
-            }
-
-            MouseHoldInterval_Time = 0;
-        })
-    } else {
-        document.addEventListener('mousedown', (e)=>{
-            e.stopPropagation();
-
-            InitialX = e.clientX;
-
-            if (InitialX < 200){
-                MouseHoldInterval = setInterval(()=>{
-                    MouseHoldInterval_Time += 100;
-                }, 100)
-            }
-        });
-
-        document.addEventListener('mouseup', (e)=>{
-            e.stopPropagation();
-
-            FinalX = e.clientX;
-
-            clearInterval(MouseHoldInterval);
-            
-            if (MouseHoldInterval_Time > 50){
-                if ((FinalX - InitialX) > 50){
-                    Load_SlideMenu_ClickFunction();
-                }
-            }
-
-            MouseHoldInterval_Time = 0;
-        })
-    }
-
-
-
-}
-
-function Create_NewTask_Function(){
-    document.getElementById('NavBar_NewTaskButton').addEventListener('click', ()=>{
-        var Display_NewTaskInputScreen = function(){}
-    });
+    var NewTask_Submit = document.createElement('input');
+    NewTask_Submit.type = 'submit';
+    NewTask_Submit.id = 'NewTask_Submit';
+    NewTask_Submit.textContent = 'Submit';
+    NewTask_Form.appendChild(NewTask_Submit);
 }
