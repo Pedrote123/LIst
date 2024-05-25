@@ -1,4 +1,5 @@
 var UnfinishedTasks = JSON.parse(localStorage.getItem('Unfinished_Tasks')) || [];
+console.log(UnfinishedTasks)
 var FinishedTasks = JSON.parse(localStorage.getItem('Finished_Tasks')) || [];
 
 
@@ -24,7 +25,7 @@ function Load_UnfinishedTasks(){
         UnfinishedTasks_List_Item_Checkbox.type = 'checkbox';
         UnfinishedTasks_List_Item.appendChild(UnfinishedTasks_List_Item_Checkbox);
 
-        UnfinishedTasks_List_Item.innerHTML = UnfinishedTasks[i]
+        UnfinishedTasks_List_Item.innerHTML = UnfinishedTasks_List_Item.innerHTML + UnfinishedTasks[i];
     }
 };
 
@@ -80,6 +81,8 @@ function Create_NewTask_Function(){
             });
         }
         Remove_NewTask_InputDisplay();
+
+        Submit_NewTask();
     }
 }
 
@@ -100,12 +103,14 @@ function Display_NewTask_InputScreen(NewTask_InputDisplay, NewTask_InputDisplay_
     NewTask_Text.type = 'text';
     NewTask_Text.id = 'NewTask_Text';
     NewTask_Text.placeholder = 'Introduce your task';
+    NewTask_Text.required = true;
     NewTask_Form.appendChild(NewTask_Text);
 
-    var NewTask_Date = document.createElement('input');
-    NewTask_Date.type = 'date';
-    NewTask_Date.id = 'NewTask_Date';
-    NewTask_Form.appendChild(NewTask_Date);
+    // var NewTask_Date = document.createElement('input');
+    // NewTask_Date.type = 'date';
+    // NewTask_Date.id = 'NewTask_Date';
+    // NewTask_Date.required = true;
+    // NewTask_Form.appendChild(NewTask_Date);
 
     var NewTask_Submit = document.createElement('input');
     NewTask_Submit.type = 'submit';
@@ -113,3 +118,16 @@ function Display_NewTask_InputScreen(NewTask_InputDisplay, NewTask_InputDisplay_
     NewTask_Submit.textContent = 'Submit';
     NewTask_Form.appendChild(NewTask_Submit);
 }
+
+function Submit_NewTask(){
+    document.addEventListener('submit', (e)=>{
+        e.preventDefault();
+
+        var NewTask = document.getElementById('NewTask_Text').value;
+
+        document.getElementById('NewTask_Text').value = '';
+
+        UnfinishedTasks.push(NewTask);
+        localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+    })
+};
