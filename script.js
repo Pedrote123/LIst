@@ -37,6 +37,8 @@ function Load_PageFunctions(){
         e.stopPropagation();
         Create_NewTask_Function();
     });
+
+    Delete_Task_Function();
 }
 
 
@@ -115,13 +117,15 @@ function Display_NewTask_InputScreen(NewTask_InputDisplay, NewTask_InputDisplay_
     var NewTask_Submit = document.createElement('input');
     NewTask_Submit.type = 'submit';
     NewTask_Submit.id = 'NewTask_Submit';
-    NewTask_Submit.textContent = 'Submit';
+    NewTask_Submit.value = 'Submit';
     NewTask_Form.appendChild(NewTask_Submit);
 }
 
 function Submit_NewTask(){
-    document.addEventListener('submit', (e)=>{
+    document.getElementById('NewTask_Form').addEventListener('submit', (e)=>{
         e.preventDefault();
+
+        alert('New task added');
 
         var NewTask = document.getElementById('NewTask_Text').value;
 
@@ -129,5 +133,146 @@ function Submit_NewTask(){
 
         UnfinishedTasks.push(NewTask);
         localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+
+        setTimeout(()=>{location.reload()}, 2000)
     })
 };
+
+function Delete_Task_Function(){
+    var TaskClicked_Interval;
+    var TaskClicked_Interval_Time = 0;
+
+    var TouchORClick_HoldFunction = function(TaskClicked){
+        TaskClicked_Interval = setInterval(()=>{
+            TaskClicked_Interval_Time += 100;
+
+            if (TaskClicked_Interval_Time >= 1000){
+                Create_DeleteTask_Function(TaskClicked);
+
+                clearInterval(TaskClicked_Interval);
+
+                TaskClicked_Interval_Time = 0;
+            };
+        }, 100);
+    }
+
+    for (let i = 0; i < document.querySelectorAll('.Unfinished_Tasks li').length; i++){
+
+        if (screen.width < '800'){
+            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('touchstart', (e)=>{
+                e.stopPropagation();
+                
+                TouchORClick_HoldFunction(document.querySelectorAll('.Unfinished_Tasks li')[i].textContent);
+            });
+            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('touchend', (e)=> {
+                e.stopPropagation();
+
+                clearInterval(TaskClicked_Interval);
+                TaskClicked_Interval_Time = 0;
+            });
+
+        } else {
+            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('mousedown', (e)=>{
+                e.stopPropagation();
+                
+                TouchORClick_HoldFunction(document.querySelectorAll('.Unfinished_Tasks li')[i].textContent);
+            });
+            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('mouseup', (e)=> {
+                e.stopPropagation();
+
+                clearInterval(TaskClicked_Interval);
+                TaskClicked_Interval_Time = 0;
+            });
+        }
+
+    };
+};
+
+function Create_DeleteTask_Function(TaskClicked){
+
+    var DeleteTask_Display = document.getElementById('DeleteTask_Display');
+    var DeleteTask_Display_Filter = document.getElementById('DeleteTask_Display_Filter');
+
+
+    if (!DeleteTask_Display){
+        Display_DeleteTask(TaskClicked, DeleteTask_Display, DeleteTask_Display_Filter);
+
+        DeleteTask_Display = document.getElementById('DeleteTask_Display');
+        DeleteTask_Display_Filter = document.getElementById('DeleteTask_Display_Filter');
+
+        var Remove_DeleteTask_InputDisplay = function(){
+
+            var DeleteTask_Display_LeftBorder = DeleteTask_Display.offsetLeft;
+            var DeleteTask_Display_RightBorder = DeleteTask_Display_LeftBorder + DeleteTask_Display.offsetWidth;
+            var DeleteTask_Display_TopBorder = DeleteTask_Display.offsetTop;
+            var DeleteTask_Display_BottomBorder = DeleteTask_Display_TopBorder + DeleteTask_Display.offsetHeight;
+
+            document.addEventListener('click', (e)=>{
+                e.stopPropagation();
+
+                if ((DeleteTask_Display_RightBorder < e.clientX || e.clientX < DeleteTask_Display_LeftBorder || DeleteTask_Display_TopBorder > e.clientY || e.clientY > DeleteTask_Display_BottomBorder) && document.getElementById('DeleteTask_Display')){
+                    document.body.removeChild(document.getElementById('DeleteTask_Display'));
+                    DeleteTask_Display = null;
+
+                    document.body.removeChild(document.getElementById('DeleteTask_Display_Filter'));
+                    DeleteTask_Display_Filter = null;
+                    removeEventListener('click', e)
+                }
+            });
+        }
+        Remove_DeleteTask_InputDisplay();
+    }
+
+};
+
+function Display_DeleteTask(TaskClicked, DeleteTask_Display, DeleteTask_Display_Filter){
+    DeleteTask_Display = document.createElement('div');
+    DeleteTask_Display.id = 'DeleteTask_Display';
+    document.body.appendChild(DeleteTask_Display);
+
+    DeleteTask_Display_Filter = document.createElement('span');
+    DeleteTask_Display_Filter.id = 'DeleteTask_Display_Filter';
+    document.body.appendChild(DeleteTask_Display_Filter);
+
+    var DeleteTask_Display_Text = document.createElement('div');
+    DeleteTask_Display_Text.id = 'DeleteTask_Display_Text';
+    DeleteTask_Display_Text.textContent = 'Delete task?';
+    DeleteTask_Display.appendChild(DeleteTask_Display_Text);
+
+    var DeleteTask_Display_Buttons = document.createElement('div');
+    DeleteTask_Display_Buttons.id = 'DeleteTask_Display_Buttons';
+    DeleteTask_Display.appendChild(DeleteTask_Display_Buttons);
+
+    var DeleteTask_Display_ButtonYes = document.createElement('span');
+    DeleteTask_Display_ButtonYes.textContent = 'Yes';
+    DeleteTask_Display_Buttons.appendChild(DeleteTask_Display_ButtonYes);
+
+    var DeleteTask_Display_ButtonNo = document.createElement('span');
+    DeleteTask_Display_ButtonNo.textContent = 'No';
+    DeleteTask_Display_Buttons.appendChild(DeleteTask_Display_ButtonNo);
+
+
+    var ButtonClick_Function = function(){
+        DeleteTask_Display_ButtonYes.addEventListener('click', (e)=>{
+            e.stopPropagation();
+
+            var TaskToDelete = UnfinishedTasks.indexOf(TaskClicked);
+            UnfinishedTasks.splice(TaskToDelete, 1);
+
+            localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks))
+            location.reload();
+        });
+
+        DeleteTask_Display_ButtonNo.addEventListener('click', (e)=>{
+            e.stopPropagation();
+
+            document.body.removeChild(DeleteTask_Display);
+            DeleteTask_Display = null;
+
+            document.body.removeChild(DeleteTask_Display_Filter);
+            DeleteTask_Display_Filter = null;
+        });
+    }
+    setTimeout(ButtonClick_Function, 100)
+
+}
