@@ -1,0 +1,42 @@
+@media screen and (min-width: 800px){
+
+    #NavBar{
+        width: calc(100vw - 163.84px - 5.1rem);
+        margin-left: calc(163.84px + 4rem);
+        box-sizing: border-box;
+    }
+
+    #NavBar_SideMenuIcon{
+        display: none;
+    }
+    
+    #NavBar_Logo{
+        display: none;
+    }
+
+    .Unfinished_Tasks{
+        box-sizing: border-box;
+        width: calc(100vw - 163.84px - 5.1rem);
+        margin-left: calc(163.84px + 4rem);
+    }
+
+    #NewTask_InputDisplay{
+        width: 40vw;
+        left: calc(50% - 20vw);
+    }
+
+    #SideMenu{
+        width: max-content;
+        animation-name: none;
+        position: absolute;
+    }
+
+    #SideMenu_Home_AcomplishedTasks_StadisticsANDHelp{
+        padding: 2rem 2rem;
+    }
+
+    #SideMenu.Removing{
+        animation-name: none;
+    }
+    
+}

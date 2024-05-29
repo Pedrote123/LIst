@@ -90,11 +90,7 @@ function Load_SlideMenu_DragFunction(){
     var MouseHoldInterval;
     var MouseHoldInterval_Time = 0;
 
-    if (screen.width < 800){
-        Load_SlideMenu_DragFunction_Mobile(InitialX, FinalX, MouseHoldInterval, MouseHoldInterval_Time);
-    } else {
-        Load_SlideMenu_DragFunction_Computer(InitialX, FinalX, MouseHoldInterval, MouseHoldInterval_Time);
-    }  
+    Load_SlideMenu_DragFunction_Mobile(InitialX, FinalX, MouseHoldInterval, MouseHoldInterval_Time);
 }
 
 function Load_SlideMenu_DragFunction_Mobile(InitialX, FinalX, MouseHoldInterval, MouseHoldInterval_Time){

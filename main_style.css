@@ -76,6 +76,8 @@ html, body{
 }
 
 .Unfinished_Tasks li{
+    display: flex;
+    align-items: center;
     margin: 0.2rem 0;
     padding: 1rem 1rem;
     background-color: rgb(252, 252, 252);
@@ -86,6 +88,49 @@ html, body{
     border: 7px solid rgb(175 255 209);
     padding: calc(1rem - 7px) calc(1rem - 7px);
 }
+
+.UnfinishedTasks_List_Item_CheckboxContainer{
+    width: 60px;
+    height: 30px;
+    background-color: rgb(240 240 240);
+    margin-right: 0.6rem;
+    border-radius: 5rem;
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+}
+.UnfinishedTasks_List_Item_CheckboxContainerMark{
+    display: flex;
+    width: 30px;
+    height: inherit;
+    border-radius: 100%;
+    background-color: rgb(244 244 244);
+    filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.2));
+}
+.checked{
+    animation-name: displayToRight;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes displayToRight{
+    0%{margin-left: 0;}
+    100%{margin-left: 50%;}
+}
+
+.unchecked{
+    animation-name: displayToLeft;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes displayToLeft{
+    0%{margin-left: 50%;}
+    100%{margin-left: 0%;}
+}
+
+
 
 
 #SideMenu{

@@ -21,11 +21,43 @@ function Load_UnfinishedTasks(){
         var UnfinishedTasks_List_Item = document.createElement('li');
         document.querySelector('.Unfinished_Tasks').appendChild(UnfinishedTasks_List_Item);
 
-        var UnfinishedTasks_List_Item_Checkbox = document.createElement('input');
-        UnfinishedTasks_List_Item_Checkbox.type = 'checkbox';
-        UnfinishedTasks_List_Item.appendChild(UnfinishedTasks_List_Item_Checkbox);
+        var UnfinishedTasks_List_Item_CheckboxContainer = document.createElement('div');
+        UnfinishedTasks_List_Item_CheckboxContainer.classList.add('UnfinishedTasks_List_Item_CheckboxContainer');
+        UnfinishedTasks_List_Item.appendChild(UnfinishedTasks_List_Item_CheckboxContainer);
+
+        var UnfinishedTasks_List_Item_CheckboxContainerMark = document.createElement('span');
+        UnfinishedTasks_List_Item_CheckboxContainerMark.classList.add('UnfinishedTasks_List_Item_CheckboxContainerMark');
+        UnfinishedTasks_List_Item_CheckboxContainer.appendChild(UnfinishedTasks_List_Item_CheckboxContainerMark);
 
         UnfinishedTasks_List_Item.innerHTML = UnfinishedTasks_List_Item.innerHTML + UnfinishedTasks[i];
+
+        var CheckboxFunction = function(){
+            var checkbox_Container = document.querySelectorAll('.UnfinishedTasks_List_Item_CheckboxContainer');
+            for (let i = 0; i < checkbox_Container.length; i++){
+                checkbox_Container[i].addEventListener('click', (e)=>{
+                    e.stopPropagation();
+                    
+                    if (checkbox_Container[i].firstChild.classList.contains('checked')){
+                        checkbox_Container[i].firstChild.classList.add('unchecked');
+                        checkbox_Container[i].firstChild.classList.remove('checked');
+
+                        checkbox_Container[i].style.backgroundColor = 'rgb(240 240 240)';
+                    }
+                    else if (checkbox_Container[i].firstChild.classList.contains('unchecked')){
+                        checkbox_Container[i].firstChild.classList.add('checked');
+                        checkbox_Container[i].firstChild.classList.remove('unchecked');
+
+                        checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
+                    } 
+                    else{
+                        checkbox_Container[i].firstChild.classList.add('checked');
+
+                        checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
+                    }
+                })
+            }
+        };
+        CheckboxFunction();
     }
 };
 
@@ -43,12 +75,21 @@ function Load_PageFunctions(){
 
 
 function Load_SlideMenu_Functions(){
-    document.getElementById('NavBar_SideMenuIcon').addEventListener('click', (e)=>{
-        e.stopPropagation();
-        Load_SlideMenu_ClickFunction();
-    });
+    if (screen.width < 800){
+        document.getElementById('NavBar_SideMenuIcon').addEventListener('click', (e)=>{
+            e.stopPropagation();
+            Load_SlideMenu_ClickFunction();
+        });
+    
+        Load_SlideMenu_DragFunction();
+    } else {
+        var SideMenu = null;
+        var SideMenu_ScreenFilter = null;
 
-    Load_SlideMenu_DragFunction();
+        Create_SlideMenu_Buttons(SideMenu, SideMenu_ScreenFilter);
+
+        document.body.removeChild(document.getElementById('SideMenu_ScreenFilter'))
+    }
 }
 
 
@@ -107,12 +148,6 @@ function Display_NewTask_InputScreen(NewTask_InputDisplay, NewTask_InputDisplay_
     NewTask_Text.placeholder = 'Introduce your task';
     NewTask_Text.required = true;
     NewTask_Form.appendChild(NewTask_Text);
-
-    // var NewTask_Date = document.createElement('input');
-    // NewTask_Date.type = 'date';
-    // NewTask_Date.id = 'NewTask_Date';
-    // NewTask_Date.required = true;
-    // NewTask_Form.appendChild(NewTask_Date);
 
     var NewTask_Submit = document.createElement('input');
     NewTask_Submit.type = 'submit';
