@@ -176,6 +176,17 @@ html, body{
     }
 }
 
+#SideMenu_Logo{
+    background-image: url('LIst Logo.png');
+    background-size: 94.5px 35.17px;
+    background-position: top;
+    background-repeat: no-repeat;
+    display: none;
+    border: none !important;
+    min-height: 45.17px;
+    filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.2));
+}
+
 #SideMenu_Home_AcomplishedTasks_StadisticsANDHelp{
     display: flex;
     flex-direction: column;

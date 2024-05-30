@@ -1,9 +1,14 @@
 @media screen and (min-width: 800px){
 
+    body{
+        display: flex;
+    }
+
+    #MainContent_Container{
+        width: -webkit-fill-available;
+    }
+
     #NavBar{
-        width: calc(100vw - 163.84px - 5.1rem);
-        margin-left: calc(163.84px + 4rem);
-        box-sizing: border-box;
     }
 
     #NavBar_SideMenuIcon{
@@ -15,9 +20,6 @@
     }
 
     .Unfinished_Tasks{
-        box-sizing: border-box;
-        width: calc(100vw - 163.84px - 5.1rem);
-        margin-left: calc(163.84px + 4rem);
     }
 
     #NewTask_InputDisplay{
@@ -28,11 +30,11 @@
     #SideMenu{
         width: max-content;
         animation-name: none;
-        position: absolute;
+        position: sticky;
     }
 
     #SideMenu_Home_AcomplishedTasks_StadisticsANDHelp{
-        padding: 2rem 2rem;
+        padding: 2rem 1rem;
     }
 
     #SideMenu.Removing{

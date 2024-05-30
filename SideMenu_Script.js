@@ -46,6 +46,16 @@ function Create_SlideMenu_Buttons(SideMenu, SideMenu_ScreenFilter){
         SideMenu = document.createElement('div');
         SideMenu.id = 'SideMenu';
         document.body.appendChild(SideMenu);
+        
+        if(screen.width >= 800){
+            document.getElementById('SideMenu').parentNode.insertBefore(SideMenu, document.getElementById('NavBar'))
+
+            var MainContent_Container = document.createElement('div');
+            MainContent_Container.id = 'MainContent_Container';
+            document.body.appendChild(MainContent_Container);
+            MainContent_Container.appendChild(document.getElementById('NavBar'));
+            MainContent_Container.appendChild(document.querySelector('.Unfinished_Tasks'))
+        }
     
         SideMenu_ScreenFilter = document.createElement('span');
         SideMenu_ScreenFilter.id = 'SideMenu_ScreenFilter';
@@ -55,9 +65,18 @@ function Create_SlideMenu_Buttons(SideMenu, SideMenu_ScreenFilter){
 
 
     Create_SideMenuButtons = function(){
+
         var SideMenu_Home_AcomplishedTasks_StadisticsANDHelp = document.createElement('div');
         SideMenu_Home_AcomplishedTasks_StadisticsANDHelp.id = 'SideMenu_Home_AcomplishedTasks_StadisticsANDHelp';
         SideMenu.appendChild(SideMenu_Home_AcomplishedTasks_StadisticsANDHelp);
+
+        var SideMenu_Logo = document.createElement('span');
+        SideMenu_Logo.id = 'SideMenu_Logo';
+        SideMenu_Home_AcomplishedTasks_StadisticsANDHelp.appendChild(SideMenu_Logo);
+
+        if (screen.width >= 800){
+            SideMenu_Logo.style.display = 'flex';
+        }
 
         var SideMenu_Home_Button = document.createElement('span');
         SideMenu_Home_Button.id = 'SideMenu_Home_Button';
