@@ -1,6 +1,7 @@
 var UnfinishedTasks = JSON.parse(localStorage.getItem('Unfinished_Tasks')) || [];
 console.log(UnfinishedTasks)
 var FinishedTasks = JSON.parse(localStorage.getItem('Finished_Tasks')) || [];
+console.log(FinishedTasks)
 
 
 
@@ -10,58 +11,111 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 
 function Load_Page(){
-    Load_UnfinishedTasks();
+    Load_Tasks('Unfinished', UnfinishedTasks);
 
-    Load_PageFunctions();
+    Load_PageFunctions('Unfinished');
 };
 
 
-function Load_UnfinishedTasks(){
-    for (let i = 0; i < UnfinishedTasks.length; i++){
-        var UnfinishedTasks_List_Item = document.createElement('li');
-        document.querySelector('.Unfinished_Tasks').appendChild(UnfinishedTasks_List_Item);
+function Load_Tasks(Status, ListOfTasks){
+    var Task_List = document.createElement('ul');
+    Task_List.classList.add(`${Status}_Tasks`);
+    document.getElementById('MainContent_Container').appendChild(Task_List)
+    
+    for (let i = 0; i < ListOfTasks.length; i++){
+        var Tasks_List_Item = document.createElement('li');
+        document.querySelector(`.${Status}_Tasks`).appendChild(Tasks_List_Item);
 
-        var UnfinishedTasks_List_Item_CheckboxContainer = document.createElement('div');
-        UnfinishedTasks_List_Item_CheckboxContainer.classList.add('UnfinishedTasks_List_Item_CheckboxContainer');
-        UnfinishedTasks_List_Item.appendChild(UnfinishedTasks_List_Item_CheckboxContainer);
+        var Tasks_List_Item_CheckboxContainer = document.createElement('div');
+        Tasks_List_Item_CheckboxContainer.classList.add(`${Status}Tasks_List_Item_CheckboxContainer`);
+        Tasks_List_Item.appendChild(Tasks_List_Item_CheckboxContainer);
 
-        var UnfinishedTasks_List_Item_CheckboxContainerMark = document.createElement('span');
-        UnfinishedTasks_List_Item_CheckboxContainerMark.classList.add('UnfinishedTasks_List_Item_CheckboxContainerMark');
-        UnfinishedTasks_List_Item_CheckboxContainer.appendChild(UnfinishedTasks_List_Item_CheckboxContainerMark);
+        var Tasks_List_Item_CheckboxContainerMark = document.createElement('span');
+        Tasks_List_Item_CheckboxContainerMark.classList.add(`${Status}Tasks_List_Item_CheckboxContainerMark`);
+        Tasks_List_Item_CheckboxContainer.appendChild(Tasks_List_Item_CheckboxContainerMark);
 
-        UnfinishedTasks_List_Item.innerHTML = UnfinishedTasks_List_Item.innerHTML + UnfinishedTasks[i];
+        if (Status == 'Finished'){
+            Tasks_List_Item_CheckboxContainerMark.classList.add('checked');
+            Tasks_List_Item_CheckboxContainer.style.backgroundColor = 'rgb(175 255 209)';
+        }
 
-        var CheckboxFunction = function(){
-            var checkbox_Container = document.querySelectorAll('.UnfinishedTasks_List_Item_CheckboxContainer');
-            for (let i = 0; i < checkbox_Container.length; i++){
-                checkbox_Container[i].addEventListener('click', (e)=>{
-                    e.stopPropagation();
-                    
-                    if (checkbox_Container[i].firstChild.classList.contains('checked')){
-                        checkbox_Container[i].firstChild.classList.add('unchecked');
-                        checkbox_Container[i].firstChild.classList.remove('checked');
+        Tasks_List_Item.innerHTML = Tasks_List_Item.innerHTML + ListOfTasks[i];
 
-                        checkbox_Container[i].style.backgroundColor = 'rgb(240 240 240)';
-                    }
-                    else if (checkbox_Container[i].firstChild.classList.contains('unchecked')){
-                        checkbox_Container[i].firstChild.classList.add('checked');
-                        checkbox_Container[i].firstChild.classList.remove('unchecked');
-
-                        checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
-                    } 
-                    else{
-                        checkbox_Container[i].firstChild.classList.add('checked');
-
-                        checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
-                    }
-                })
-            }
-        };
-        CheckboxFunction();
+        CheckboxFunction(Status);
     }
 };
 
-function Load_PageFunctions(){
+function CheckboxFunction(Status){
+    var checkbox_Container = document.querySelectorAll(`.${Status}Tasks_List_Item_CheckboxContainer`);
+    for (let i = 0; i < checkbox_Container.length; i++){
+        checkbox_Container[i].addEventListener('click', (e)=>{
+            e.stopPropagation();
+            var ClickedItem = checkbox_Container[i].parentNode;
+            
+            if (checkbox_Container[i].firstChild.classList.contains('checked')){
+                checkbox_Container[i].firstChild.classList.add('unchecked');
+                checkbox_Container[i].firstChild.classList.remove('checked');
+
+                FinishedTasks.splice(FinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+                localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
+
+                if (!(UnfinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
+                    UnfinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+                    localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+                }
+
+                ClickedItem.classList.add('DeletingItem');
+                setTimeout(()=>{
+                    ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
+                }, 1000)
+                    
+                checkbox_Container[i].style.backgroundColor = 'rgb(240 240 240)';
+
+            }
+            else if (checkbox_Container[i].firstChild.classList.contains('unchecked')){
+                checkbox_Container[i].firstChild.classList.add('checked');
+                checkbox_Container[i].firstChild.classList.remove('unchecked');
+                
+                UnfinishedTasks.splice(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+                localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+
+                if (!(FinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
+                    FinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+                    localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
+                }
+
+                ClickedItem.classList.add('DeletingItem');
+                setTimeout(()=>{
+                    ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
+                }, 1000)
+
+                checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
+            } 
+            else{
+                checkbox_Container[i].firstChild.classList.add('checked');
+                console.log(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent))
+
+
+                UnfinishedTasks.splice(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+                localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+
+                if (!(FinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
+                    FinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+                    localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
+                }
+
+                ClickedItem.classList.add('DeletingItem');
+                setTimeout(()=>{
+                    ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
+                }, 1000)
+
+                checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
+            }
+        })
+    }
+}
+
+function Load_PageFunctions(Status){
 
     Load_SlideMenu_Functions();
 
@@ -70,7 +124,7 @@ function Load_PageFunctions(){
         Create_NewTask_Function();
     });
 
-    Delete_Task_Function();
+    Delete_Task_Function(Status);
 }
 
 
@@ -173,7 +227,7 @@ function Submit_NewTask(){
     })
 };
 
-function Delete_Task_Function(){
+function Delete_Task_Function(Status){
     var TaskClicked_Interval;
     var TaskClicked_Interval_Time = 0;
 

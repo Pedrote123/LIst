@@ -48,13 +48,7 @@ function Create_SlideMenu_Buttons(SideMenu, SideMenu_ScreenFilter){
         document.body.appendChild(SideMenu);
         
         if(screen.width >= 800){
-            document.getElementById('SideMenu').parentNode.insertBefore(SideMenu, document.getElementById('NavBar'))
-
-            var MainContent_Container = document.createElement('div');
-            MainContent_Container.id = 'MainContent_Container';
-            document.body.appendChild(MainContent_Container);
-            MainContent_Container.appendChild(document.getElementById('NavBar'));
-            MainContent_Container.appendChild(document.querySelector('.Unfinished_Tasks'))
+            document.getElementById('MainContent_Container').parentNode.insertBefore(SideMenu, document.getElementById('MainContent_Container'));
         }
     
         SideMenu_ScreenFilter = document.createElement('span');
@@ -82,21 +76,47 @@ function Create_SlideMenu_Buttons(SideMenu, SideMenu_ScreenFilter){
         SideMenu_Home_Button.id = 'SideMenu_Home_Button';
         SideMenu_Home_Button.textContent = 'Home';
         SideMenu_Home_AcomplishedTasks_StadisticsANDHelp.appendChild(SideMenu_Home_Button);
+        SideMenu_Home_Button.addEventListener('click', (e)=>{
+            e.stopPropagation();
+            Load_HomeScreen();
+        });
 
         var SideMenu_AcomplishedTasks_Button = document.createElement('span');
         SideMenu_AcomplishedTasks_Button.id = 'SideMenu_AcomplishedTasks_Button';
         SideMenu_AcomplishedTasks_Button.textContent = 'Acomplished tasks';
         SideMenu_Home_AcomplishedTasks_StadisticsANDHelp.appendChild(SideMenu_AcomplishedTasks_Button);
 
+        SideMenu_AcomplishedTasks_Button.addEventListener('click', (e)=>{
+            e.stopPropagation();
+
+            Remove_HomeScreen();
+            
+            Load_Tasks('Finished', FinishedTasks);
+            
+            Delete_Task_Function('Finished');
+        });
+
         var SideMenu_Stadistics_Button = document.createElement('span');
         SideMenu_Stadistics_Button.id = 'SideMenu_Stadistics_Button';
         SideMenu_Stadistics_Button.textContent = 'Stadistics';
         SideMenu_Home_AcomplishedTasks_StadisticsANDHelp.appendChild(SideMenu_Stadistics_Button);
 
+        SideMenu_Stadistics_Button.addEventListener('click', (e)=>{
+            e.stopPropagation();
+            Remove_HomeScreen();
+            Load_StadisticsScreen();
+        });
+
         var SideMenu_Help_Button = document.createElement('span');
         SideMenu_Help_Button.id = 'SideMenu_Help_Button';
         SideMenu_Help_Button.textContent = 'Help';
         SideMenu_Home_AcomplishedTasks_StadisticsANDHelp.appendChild(SideMenu_Help_Button);
+
+        SideMenu_Help_Button.addEventListener('click', (e)=>{
+            e.stopPropagation();
+            Remove_HomeScreen();
+            Load_HelpScreen();
+        });
     };
     Create_SideMenuButtons();
 }
@@ -178,4 +198,20 @@ function Load_SlideMenu_DragFunction_Computer(InitialX, FinalX, MouseHoldInterva
             MouseHoldInterval_Time = 0;
         }
     })
+}
+
+function Remove_HomeScreen(){
+    var MainContent_Container = document.getElementById('MainContent_Container');
+
+    for (let i = MainContent_Container.childNodes.length - 1; i >= 0; i--){
+        MainContent_Container.removeChild(MainContent_Container.childNodes[i]);
+    }
+
+    // for (let i = 0; i < MainContent_Container.childNodes.length; i++){
+    //     console.log(MainContent_Container.childNodes[i])
+
+    //     if (MainContent_Container.childNodes[i].classList.contains('Unfinished_Tasks')){
+    //         document.querySelector('.Unfinished_Tasks').remove()
+    //     }
+    // }
 }
