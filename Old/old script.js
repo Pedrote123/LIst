@@ -47,72 +47,110 @@ function Load_Tasks(Status, ListOfTasks){
 
 function CheckboxFunction(Status){
     var checkbox_Container = document.querySelectorAll(`.${Status}Tasks_List_Item_CheckboxContainer`);
-    for (let i = 0; i < checkbox_Container.length; i++){
-        checkbox_Container[i].addEventListener('click', (e)=>{
-            e.stopPropagation();
-            var ClickedItem = checkbox_Container[i].parentNode;
+    // for (let i = 0; i < checkbox_Container.length; i++){
+    //     checkbox_Container[i].addEventListener('click', (e)=>{
+    //         e.stopPropagation();
+    //         var ClickedItem = checkbox_Container[i].parentNode;
             
-            if (checkbox_Container[i].firstChild.classList.contains('checked')){
-                checkbox_Container[i].firstChild.classList.add('unchecked');
-                checkbox_Container[i].firstChild.classList.remove('checked');
+    //         if (checkbox_Container[i].firstChild.classList.contains('checked')){
+    //             checkbox_Container[i].firstChild.classList.add('unchecked');
+    //             checkbox_Container[i].firstChild.classList.remove('checked');
 
-                FinishedTasks.splice(FinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
-                localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
+    //             FinishedTasks.splice(FinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+    //             localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
 
-                if (!(UnfinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
-                    UnfinishedTasks.push(checkbox_Container[i].parentNode.textContent);
-                    localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
-                }
+    //             if (!(UnfinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
+    //                 UnfinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+    //                 localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+    //             }
 
-                ClickedItem.classList.add('DeletingItem');
-                setTimeout(()=>{
-                    ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
-                }, 1000)
+    //             ClickedItem.classList.add('DeletingItem');
+    //             setTimeout(()=>{
+    //                 ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
+    //             }, 1000)
                     
-                checkbox_Container[i].style.backgroundColor = 'rgb(240 240 240)';
+    //             checkbox_Container[i].style.backgroundColor = 'rgb(240 240 240)';
 
-            }
-            else if (checkbox_Container[i].firstChild.classList.contains('unchecked')){
-                checkbox_Container[i].firstChild.classList.add('checked');
-                checkbox_Container[i].firstChild.classList.remove('unchecked');
+    //         }
+    //         else if (checkbox_Container[i].firstChild.classList.contains('unchecked')){
+    //             checkbox_Container[i].firstChild.classList.add('checked');
+    //             checkbox_Container[i].firstChild.classList.remove('unchecked');
                 
-                UnfinishedTasks.splice(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
-                localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+    //             UnfinishedTasks.splice(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+    //             localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
 
-                if (!(FinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
-                    FinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+    //             if (!(FinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
+    //                 FinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+    //                 localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
+    //             }
+
+    //             ClickedItem.classList.add('DeletingItem');
+    //             setTimeout(()=>{
+    //                 ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
+    //             }, 1000)
+
+    //             checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
+    //         } 
+    //         else{
+    //             checkbox_Container[i].firstChild.classList.add('checked');
+    //             console.log(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent))
+
+
+    //             UnfinishedTasks.splice(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+    //             localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+
+    //             if (!(FinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
+    //                 FinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+    //                 localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
+    //             }
+
+    //             ClickedItem.classList.add('DeletingItem');
+    //             setTimeout(()=>{
+    //                 ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
+    //             }, 1000)
+
+    //             checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
+    //         }
+    //     })
+    // }
+
+    for (let i = 0; i < checkbox_Container.length; i++) {
+
+        if (!checkbox_Container[i].dataset.listenerAdded) {
+            checkbox_Container[i].addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                if (Status == 'Finished'){
+                    UnfinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+                    FinishedTasks.splice(FinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+
+                    checkbox_Container[i].firstChild.classList.remove('checked');
+                    checkbox_Container[i].style.backgroundColor = 'rgb(240 240 240)';
+
+                    checkbox_Container[i].parentNode.classList.add('DeletingItem');
+                    setTimeout(()=>{checkbox_Container[i].parentNode.remove()}, 500);
+
                     localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
-                }
-
-                ClickedItem.classList.add('DeletingItem');
-                setTimeout(()=>{
-                    ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
-                }, 1000)
-
-                checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
-            } 
-            else{
-                checkbox_Container[i].firstChild.classList.add('checked');
-                console.log(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent))
-
-
-                UnfinishedTasks.splice(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
-                localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
-
-                if (!(FinishedTasks.includes(checkbox_Container[i].parentNode.textContent))){
+                    localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+                } else{
                     FinishedTasks.push(checkbox_Container[i].parentNode.textContent);
+                    UnfinishedTasks.splice(UnfinishedTasks.indexOf(checkbox_Container[i].parentNode.textContent), 1);
+
+                    checkbox_Container[i].firstChild.classList.add('checked');
+                    checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
+
+                    checkbox_Container[i].parentNode.classList.add('DeletingItem');
+                    setTimeout(()=>{checkbox_Container[i].parentNode.remove()}, 500);
+
                     localStorage.setItem('Finished_Tasks', JSON.stringify(FinishedTasks));
-                }
+                    localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
+                };
+            });
 
-                ClickedItem.classList.add('DeletingItem');
-                setTimeout(()=>{
-                    ClickedItem.parentNode.removeChild(checkbox_Container[i].parentNode);
-                }, 1000)
-
-                checkbox_Container[i].style.backgroundColor = 'rgb(175 255 209)';
-            }
-        })
+            checkbox_Container[i].dataset.listenerAdded = 'true';
+        }
     }
+
 }
 
 function Load_PageFunctions(Status){
@@ -223,7 +261,7 @@ function Submit_NewTask(){
         UnfinishedTasks.push(NewTask);
         localStorage.setItem('Unfinished_Tasks', JSON.stringify(UnfinishedTasks));
 
-        setTimeout(()=>{location.reload()}, 2000)
+        setTimeout(()=>{location.reload()}, 700)
     })
 };
 
@@ -245,15 +283,15 @@ function Delete_Task_Function(Status){
         }, 100);
     }
 
-    for (let i = 0; i < document.querySelectorAll('.Unfinished_Tasks li').length; i++){
+    for (let i = 0; i < document.querySelectorAll(`.${Status}_Tasks li`).length; i++){
 
         if (screen.width < '800'){
-            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('touchstart', (e)=>{
+            document.querySelectorAll(`.${Status}_Tasks li`)[i].addEventListener('touchstart', (e)=>{
                 e.stopPropagation();
                 
-                TouchORClick_HoldFunction(document.querySelectorAll('.Unfinished_Tasks li')[i].textContent);
+                TouchORClick_HoldFunction(document.querySelectorAll(`.${Status}_Tasks li`)[i].textContent);
             });
-            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('touchend', (e)=> {
+            document.querySelectorAll(`.${Status}_Tasks li`)[i].addEventListener('touchend', (e)=> {
                 e.stopPropagation();
 
                 clearInterval(TaskClicked_Interval);
@@ -261,12 +299,12 @@ function Delete_Task_Function(Status){
             });
 
         } else {
-            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('mousedown', (e)=>{
+            document.querySelectorAll(`.${Status}_Tasks li`)[i].addEventListener('mousedown', (e)=>{
                 e.stopPropagation();
                 
-                TouchORClick_HoldFunction(document.querySelectorAll('.Unfinished_Tasks li')[i].textContent);
+                TouchORClick_HoldFunction(document.querySelectorAll(`.${Status}_Tasks li`)[i].textContent);
             });
-            document.querySelectorAll('.Unfinished_Tasks li')[i].addEventListener('mouseup', (e)=> {
+            document.querySelectorAll(`.${Status}_Tasks li`)[i].addEventListener('mouseup', (e)=> {
                 e.stopPropagation();
 
                 clearInterval(TaskClicked_Interval);
@@ -309,7 +347,8 @@ function Create_DeleteTask_Function(TaskClicked){
                 }
             });
         }
-        Remove_DeleteTask_InputDisplay();
+        setTimeout(()=>{Remove_DeleteTask_InputDisplay()}, 1000)
+
     }
 
 };

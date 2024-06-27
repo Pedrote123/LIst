@@ -78,7 +78,15 @@ function Create_SlideMenu_Buttons(SideMenu, SideMenu_ScreenFilter){
         SideMenu_Home_AcomplishedTasks_StadisticsANDHelp.appendChild(SideMenu_Home_Button);
         SideMenu_Home_Button.addEventListener('click', (e)=>{
             e.stopPropagation();
-            Load_HomeScreen();
+
+            
+            Remove_HomeScreen();
+
+            if (!document.getElementById('NavBar')){
+                Create_NavBar();
+            }
+
+            Load_Tasks('Unfinished', UnfinishedTasks);
         });
 
         var SideMenu_AcomplishedTasks_Button = document.createElement('span');
@@ -214,4 +222,24 @@ function Remove_HomeScreen(){
     //         document.querySelector('.Unfinished_Tasks').remove()
     //     }
     // }
+}
+
+function Create_NavBar(){
+    var NavBar = document.createElement('div');
+    NavBar.id = 'NavBar';
+    document.getElementById('MainContent_Container').appendChild(NavBar);
+
+    var NavBar_Image = document.createElement('img');
+    NavBar_Image.id = 'NavBar_SideMenuIcon';
+    NavBar_Image.src = 'Side menu icon.png';
+    NavBar.appendChild(NavBar_Image);
+
+    var NavBar_Logo = document.createElement('span');
+    NavBar_Logo.id = 'NavBar_Logo';
+    NavBar.appendChild(NavBar_Logo);
+
+    var NavBar_NewTaskButton = document.createElement('div');
+    NavBar_NewTaskButton.id = 'NavBar_NewTaskButton';
+    NavBar_NewTaskButton.textContent = 'New Task';
+    NavBar.appendChild(NavBar_NewTaskButton);
 }
