@@ -11,13 +11,13 @@ body{
     user-select: none;
 }
 
-#Header{
+.Header{
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
 
-#Header__NavBar{
+.Header__NavBar{
     height: 100px;
 }
 
@@ -66,14 +66,14 @@ body{
     color: var(--MainGreenColor);
 }
 
-#Header__MainDisplay{
+.Header__MainDisplay{
     display: flex;
     height: 100%;
     background: var(--MainGreenColor);
     background: linear-gradient(180deg, rgba(187,234,189,0) 0%, rgba(187,234,189,0.6) 100%);
 }
 
-#Header__MainDisplay::before{
+.Header__MainDisplay.mainPage::before{
     content: '';
     width: -webkit-fill-available;
     height: -webkit-fill-available;
