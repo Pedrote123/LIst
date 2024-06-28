@@ -17,24 +17,53 @@ body{
     height: 100vh;
 }
 
+#Header__NavBar{
+    height: 100px;
+}
+
 .Header__NavBar--List{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     list-style: none;
-    font-size: 30px;
-    padding: 0 min(5rem, 9vw);
+    font-size: min(30px, 5vw);
+    padding: 30px min(5rem, 9vw);
     align-items: center;
+    text-align: center;
+    position: fixed;
+    z-index: 5;
+    margin: 0;
+    background: rgb(244,244,244);
+    background: linear-gradient(90deg, rgba(244,244,244,0.9) 20%, rgba(244,244,244,0.5) 50%, rgba(244,244,244,0.9) 91%);
+    backdrop-filter: blur(5px);
+    width: -webkit-fill-available;
 }
 
 .Header__NavBar--List_Title{
     display: flex;
     align-items: center;
+    margin-right: auto;
 }
 
 .Header__NavBar--List_Title img{
     margin-right: 10px;
     max-width: 40px;
+}
+
+.Header__NavBar--List li:nth-child(3), .Header__NavBar--List li:nth-child(4){
+    padding: 3px min(1.5rem, 5vw);
+    margin-left: 30px;
+    border-radius: 13px;
+}
+
+.Header__NavBar--List li:nth-child(3){
+    background-color: var(--MainGreenColor);
+    color: var(--MainBrownColor);
+    margin-left: 100px;
+}
+
+.Header__NavBar--List li:nth-child(4){
+    background-color: var(--MainBrownColor);
+    color: var(--MainGreenColor);
 }
 
 #Header__MainDisplay{
