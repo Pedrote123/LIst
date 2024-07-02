@@ -88,11 +88,26 @@ body{
 }
 
 #Header__MainDisplay--Container h1{
-    margin: 0;
+    margin: 0 auto;
     font-family: 'Segoe UI';
     font-size: min(15vw, 90px);
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: writting 1s steps(12, end), blinking .75s step-end 2;
 }
+
+
+@keyframes writting {
+    0%{width: 0%;}
+    100%{width: 100%;} 
+}
+ 
+@keyframes blinking {
+    from, to {border-right: 1px solid transparent;}
+    50% {border-right: 1px solid black;}
+}
+ 
 
 #Header__MainDisplay--Container_Buttons{
     display: flex;
