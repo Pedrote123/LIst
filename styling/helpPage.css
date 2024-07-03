@@ -15,7 +15,7 @@
 }
 
 #HelpHeader__MainDisplay--Container h2{
-    font-size: min(10vw, 60px);
+    font-size: min(9vw, 60px);
     text-align: center;
     margin: 0 auto;
     color: #dff0e0;
@@ -37,5 +37,20 @@
 }
 
 #Help__MainBodySection--Container{
+    max-width: 80%;
     margin: auto;
+    margin-bottom: 15%;
+}
+
+#Help__MainBodySection--Container h2{
+    font-size: min(30px, 5vw);
+    font-weight: 500;
+    margin: min(150px, 16vw) 0 min(50px, 7vw) 0;
+}
+
+#Help__MainBodySection--Container img{
+    background-image: url('../Images/Help1.gif');
+    background-size: cover;
+    min-width: 100%;
+    min-height: 80vw;
 }
