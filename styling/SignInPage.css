@@ -1,0 +1,57 @@
+.SignHeader__MainDisplay--Container{
+    margin: auto;
+}
+
+.SignHeader__MainDisplay--Container h1{
+    font-family: 'Segoe UI';
+    font-size: min(15vw, 80px);
+    margin: 15px 0px;
+    text-align: center;
+}
+
+.SignHeader__MainDisplay--Container_Form{
+    display: flex;
+    flex-direction: column;
+    gap: min(30px, 4vw);
+    width: min(450px, 70vw);
+}
+
+.SignHeader__MainDisplay--Container_Form input{
+    height: min(2.7rem, 10vw);
+    box-sizing: content-box;
+    border-radius: min(18px);
+    border: 2px solid var(--MainGreenColor);
+    background: none;
+    padding: 0 2rem;
+}
+
+.SignHeader__MainDisplay--Container_Form input:focus{
+    outline: 0;
+    border: 2px solid var(--MainGreenColor);
+    background-color: rgba(207, 234, 209, 0.4);
+}
+
+.SignHeader__MainDisplay--Container_Form input[type='submit'], [type='button']{
+    font-family: 'Valken Regular';
+    font-size: min(30px, 5vw);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+}
+
+.SignHeader__MainDisplay--Container_Form input[type='submit']{ 
+    border-color: var(--MainBrownColor) !important;
+    background-color: var(--MainBrownColor) !important;
+    color: var(--MainGreenColor);
+}
+
+.SignHeader__MainDisplay--Container_Form input[type='button']{
+    border-color: var(--MainGreenColor);
+    background-color: var(--MainGreenColor);
+    color: var(--MainBrownColor);
+    margin-top: -20px;
+}
+
+.SignHeader__MainDisplay--Container_Form p{
+    margin: 0;
+    font-size: min(1rem, 4vw);
+    text-align: center;
+}
