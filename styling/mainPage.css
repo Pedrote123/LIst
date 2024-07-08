@@ -82,16 +82,18 @@ body{
     position: absolute;
 }
 
-#Header__MainDisplay--Container{
+.Header__MainDisplay--Container{
     z-index: 1;
     margin: auto;
 }
 
-#Header__MainDisplay--Container h1{
+.Header__MainDisplay--Container h1{
     margin: 0 auto;
     font-family: 'Segoe UI';
     font-size: min(15vw, 90px);
     text-align: center;
+}
+.Header__MainDisplay--Container.mainPage h1{
     overflow: hidden;
     white-space: nowrap;
     animation: writting 1s steps(12, end), blinking .75s step-end 2;
@@ -109,7 +111,7 @@ body{
 }
  
 
-#Header__MainDisplay--Container_Buttons{
+.Header__MainDisplay--Container_Buttons{
     display: flex;
     margin: 0;
     justify-content: space-evenly;
@@ -119,18 +121,18 @@ body{
     margin-top: 15%;
 }
 
-#Header__MainDisplay--Container_Buttons li{
+.Header__MainDisplay--Container_Buttons li{
     border-radius: 20px;
     padding: 15px min(7vw, 40px);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
 }
 
-#Header__MainDisplay--Container_Buttons li:nth-child(1){
+.Header__MainDisplay--Container_Buttons.mainPage li:nth-child(1){
     background-color: var(--MainGreenColor);
     color: var(--MainBrownColor);
 }
 
-#Header__MainDisplay--Container_Buttons li:nth-child(2){
+.Header__MainDisplay--Container_Buttons.mainPage li:nth-child(2){
     background-color: var(--MainBrownColor);
     color: var(--MainGreenColor);
 }

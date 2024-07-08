@@ -1,0 +1,60 @@
+body.profile{
+    background: linear-gradient(180deg, rgb(244 244 244) 80vh, rgba(180,227,182, 0.6) 80vh);
+}
+
+.Header.profile{
+    height: 80.1vh;
+}
+
+.Header__MainDisplay--Container.profile h1{
+    width: max-content;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: writtingProfile 0.7s steps(6, end), blinking .50s step-end 2;
+}
+
+@keyframes writtingProfile {
+    0%{width: 0%;}
+    100%{width: 30%;} 
+}
+
+.Header__MainDisplay--Container_Buttons.profile{
+    margin-top: 10%;
+    gap: 50px;
+}
+
+.Header__MainDisplay--Container_Buttons.profile li{
+    background-color: var(--MainGreenColor);
+    color: var(--MainBrownColor);
+}
+
+#Profile__MainBodySection--Container{
+    min-height: 100vh;
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    padding: 3rem;
+    box-sizing: border-box;
+    border-radius: min(5vw, 30px);
+    background-color: rgb(244 244 244);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+}
+
+#Profile__MainBodySection--Container_TaskList{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+#Profile__MainBodySection--Container li{
+    flex-basis: calc(50% - 5px);
+    background-color: var(--MainBrownColor);
+    color: var(--MainGreenColor);
+    padding: 1.5rem 0rem;
+    border-radius: 15px;
+}
+
+#Profile__MainBodySection--Container p{
+    margin: 0;
+}
