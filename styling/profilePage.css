@@ -1,9 +1,9 @@
 body.profile{
-    background: linear-gradient(180deg, rgb(244 244 244) 80vh, rgba(180,227,182, 0.6) 80vh);
+    background: linear-gradient(180deg, rgb(244 244 244) min(80vh, 100vw), rgba(180,227,182, 0.6) min(80vh, 100vw));
 }
 
 .Header.profile{
-    height: 80.1vh;
+    height: min(80.1vh, 100vw);
 }
 
 .Header__MainDisplay--Container.profile h1{
@@ -20,20 +20,28 @@ body.profile{
 
 .Header__MainDisplay--Container_Buttons.profile{
     margin-top: 10%;
-    gap: 50px;
+    gap: min(50px, 5vw);
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .Header__MainDisplay--Container_Buttons.profile li{
     background-color: var(--MainGreenColor);
     color: var(--MainBrownColor);
+    padding: min(15px, 2vw) min(5vw, 40px);
+}
+
+.profileButtonSelected{
+    background-color: var(--MainBrownColor) !important;
+    color: var(--MainGreenColor) !important;
 }
 
 #Profile__MainBodySection--Container{
-    min-height: 100vh;
+    min-height: 70vh;
     width: 95%;
     margin: 0 auto;
     margin-bottom: 50px;
-    padding: 3rem;
+    padding: 2vw;
     box-sizing: border-box;
     border-radius: min(5vw, 30px);
     background-color: rgb(244 244 244);
@@ -45,16 +53,45 @@ body.profile{
     gap: 10px;
     flex-wrap: wrap;
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-#Profile__MainBodySection--Container li{
-    flex-basis: calc(50% - 5px);
+#Profile__MainBodySection--Container_TaskList li{
+    display: flex;
+    align-items: center;
+    min-height: min(4rem, 10vw);
+    flex-basis: calc(50% - 5px - 2rem);
     background-color: var(--MainBrownColor);
     color: var(--MainGreenColor);
-    padding: 1.5rem 0rem;
-    border-radius: 15px;
+    padding: 0rem min(1rem, 2vw);
+    border-radius: min(15px, 3vw);
+}
+
+#Profile__MainBodySection--Container_TaskList li span{
+    display: flex;
+    width: min(2.5rem, 7vw);
+    height: 60%;
+    border-radius: min(10px, 2vw);
+    margin-right: min(1rem, 2vw);
+    background-color: rgb(244 244 244);
+
+}
+
+.Task_Checked{
+    background-color: var(--MainGreenColor) !important;
+    background-image: url('../Images/CheckMark.svg');
+    background-size: cover;
 }
 
 #Profile__MainBodySection--Container p{
     margin: 0;
+    font-size: min(30px, 5vw);
+    letter-spacing: 0.1rem;
+}
+
+@media screen and (max-width: 550px) {
+    #Profile__MainBodySection--Container_TaskList li{
+        flex-basis: 100%;
+    }
 }
