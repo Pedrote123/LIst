@@ -49,20 +49,29 @@ body{
     max-width: 40px;
 }
 
-.Header__NavBar--List li:nth-child(3), .Header__NavBar--List li:nth-child(4){
-    padding: 3px min(1.5rem, 5vw);
-    margin-left: 30px;
+.Header__NavBar--List_SignIn, .Header__NavBar--List_SignUp{
+    padding: 3px min(1.5rem, 4vw);
+    margin-left: min(30px, 2vw);
     border-radius: 13px;
+    font-size: min(30px, 3.5vw);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.20);
 }
 
-.Header__NavBar--List li:nth-child(3){
+.Header__NavBar--List_SignIn{
     background-color: var(--MainGreenColor);
     color: var(--MainBrownColor);
-    margin-left: 100px;
+    margin-left: min(100px, 5vw);
+}
+.Header__NavBar--List_SignIn:hover{
+    color: rgb(244,244,244);
 }
 
-.Header__NavBar--List li:nth-child(4){
+.Header__NavBar--List_SignUp{
     background-color: var(--MainBrownColor);
+    color: var(--MainGreenColor);
+}
+.Header__NavBar--List_SignUp:hover{
+    background-color: rgb(71 142 74);
     color: var(--MainGreenColor);
 }
 
@@ -131,10 +140,16 @@ body{
     background-color: var(--MainGreenColor);
     color: var(--MainBrownColor);
 }
+.Header__MainDisplay--Container_Buttons.mainPage li:nth-child(1):hover{
+    color: rgb(244,244,244);
+}
 
 .Header__MainDisplay--Container_Buttons.mainPage li:nth-child(2){
     background-color: var(--MainBrownColor);
     color: var(--MainGreenColor);
+}
+.Header__MainDisplay--Container_Buttons.mainPage li:nth-child(2):hover{
+    background-color: rgb(71 142 74);
 }
 
 #MainBodySection{
@@ -177,4 +192,12 @@ body{
 
 #MainBodySection__Text p:nth-child(1){
     margin-top: 1rem;
+}
+
+
+
+@media screen and (max-width: 450px) {
+    .Header__NavBar--List li:nth-child(3){
+        margin-left: 2vw;
+    }
 }
