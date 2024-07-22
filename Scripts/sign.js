@@ -72,8 +72,6 @@ function SignIn(username, password){
 
     var IsAnyFieldEmpty;
 
-    console.log(username);
-
     var CheckEmptyFields = function (){
         if (username == '' || password == ''){
 
