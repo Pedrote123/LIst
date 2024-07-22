@@ -1,4 +1,5 @@
-var AccountIsLogged = false; 
+var AccountIsLogged = JSON.parse(localStorage.getItem('AccountIsLogged')) || false;
+var LoggedAccount = JSON.parse(localStorage.getItem('LoggedAccount')) || 'no-loggedUser';
 
 document.addEventListener('DOMContentLoaded', ()=>{ 
 
@@ -29,6 +30,7 @@ function LoggedAccountCheck(){
     
     var NavBarSignInButton = document.querySelectorAll('.Header__NavBar--List_SignIn');
     var NavBarSignUpButton = document.querySelectorAll('.Header__NavBar--List_SignUp');
+    var LogOutButton = document.querySelectorAll('.Header__NavBar--List_LogOut');
 
     if (!AccountIsLogged){
         
@@ -58,5 +60,27 @@ function LoggedAccountCheck(){
             });
         });
 
+        LogOutButton.forEach((i)=>{
+            i.hidden = true;
+        });
+
+    } else {
+
+        LogOutButton.forEach((i)=>{
+            i.removeAttribute('hidden');
+
+            i.addEventListener('click', ()=>{
+
+                console.log('puto')
+
+                localStorage.setItem('AccountIsLogged', JSON.stringify(false));
+                
+                localStorage.setItem('LoggedAccount', JSON.stringify('no-loggedUser'));
+
+                window.location.reload();
+
+            });
+        });
     }
+    
 };
