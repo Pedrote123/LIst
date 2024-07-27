@@ -75,6 +75,10 @@ body{
     color: var(--MainGreenColor);
 }
 
+.Header__NavBar--List_Profile, .Header__NavBar--List_LogOut{
+    margin-left: min(30px, 2vw);
+}
+
 .Header__MainDisplay{
     display: flex;
     height: 100%;

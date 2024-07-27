@@ -1,6 +1,13 @@
 var AccountIsLogged = JSON.parse(localStorage.getItem('AccountIsLogged')) || false;
 var LoggedAccount = JSON.parse(localStorage.getItem('LoggedAccount')) || 'no-loggedUser';
 
+
+var NavBarSignInButton = document.querySelectorAll('.Header__NavBar--List_SignIn');
+var NavBarSignUpButton = document.querySelectorAll('.Header__NavBar--List_SignUp');
+var LogOutButton = document.querySelectorAll('.Header__NavBar--List_LogOut');
+var ProfileButton = document.querySelectorAll('.Header__NavBar--List_Profile');
+
+
 document.addEventListener('DOMContentLoaded', ()=>{ 
 
     ButtonsBehavior();
@@ -8,59 +15,58 @@ document.addEventListener('DOMContentLoaded', ()=>{
     LoggedAccountCheck();
 });
 
-function ButtonsBehavior(){   
+function RedirectionButtonFunction(button, direction){
 
-    document.querySelector('.Header__NavBar--List_Help').addEventListener('click', ()=>{
-        window.location.href = 'Sub-Pages/help.html';
+    button.forEach((i)=>{
+    
+        i.addEventListener('click', ()=>{
+
+            if (i.classList.contains('mainPage')){
+                window.location.href = direction;
+            } else{
+                window.location.href = `../${direction}`;
+            }
+        });
+        
     });
 
+}
+
+function ButtonsBehavior(){
+    
+    var HelpButton = document.querySelectorAll('.Header__NavBar--List_Help');
+
+    RedirectionButtonFunction(HelpButton, 'Sub-Pages/help.html');
 
 
-    var notMainPageLogo = document.querySelectorAll(".Header__NavBar--List_Title.notMainPage");
+    var HomeButton = document.querySelectorAll(".Header__NavBar--List_Title");
 
-    for (let i = 0; i < notMainPageLogo.length; i++){
-        notMainPageLogo[i].addEventListener('click', (e)=>{
-            window.location.href = '../index.html'
-        });
-    }
+    RedirectionButtonFunction(HomeButton, 'index.html');
+
+    RedirectionButtonFunction(NavBarSignUpButton, 'Sub-Pages/SignUp.html');
+
+    RedirectionButtonFunction(NavBarSignInButton, 'Sub-Pages/SignIn.html');
+
 };
 
 
 function LoggedAccountCheck(){
     
-    var NavBarSignInButton = document.querySelectorAll('.Header__NavBar--List_SignIn');
-    var NavBarSignUpButton = document.querySelectorAll('.Header__NavBar--List_SignUp');
-    var LogOutButton = document.querySelectorAll('.Header__NavBar--List_LogOut');
-
     if (!AccountIsLogged){
         
         NavBarSignInButton.forEach((i)=>{
             i.removeAttribute('hidden');
-
-            i.addEventListener('click', ()=>{
-
-                if (i.classList.contains('mainPage')){
-                    window.location.href = 'Sub-Pages/SignIn.html';
-                } else{
-                    window.location.href = '../Sub-Pages/SignIn.html';
-                }
-            });
         });
 
         NavBarSignUpButton.forEach((i)=>{
             i.removeAttribute('hidden');
-
-            i.addEventListener('click', ()=>{
-
-                if (i.classList.contains('mainPage')){
-                    window.location.href = 'Sub-Pages/SignUp.html';
-                } else{
-                    window.location.href = '../Sub-Pages/SignUp.html';
-                }
-            });
         });
 
         LogOutButton.forEach((i)=>{
+            i.hidden = true;
+        });
+
+        ProfileButton.forEach((i)=>{
             i.hidden = true;
         });
 
@@ -71,13 +77,29 @@ function LoggedAccountCheck(){
 
             i.addEventListener('click', ()=>{
 
-                console.log('puto')
-
                 localStorage.setItem('AccountIsLogged', JSON.stringify(false));
                 
                 localStorage.setItem('LoggedAccount', JSON.stringify('no-loggedUser'));
 
-                window.location.reload();
+                if (i.classList.contains('mainPage')){
+                    window.location.reload();
+                } else{
+                    window.location.href = '../index.html';
+                }
+
+            });
+        });
+
+        ProfileButton.forEach((i)=>{
+            i.removeAttribute('hidden');
+
+            i.addEventListener('click', ()=>{
+
+                if (i.classList.contains('mainPage')){
+                    window.location.href = 'Sub-Pages/profile.html';
+                } else{
+                    window.location.href = '../Sub-Pages/profile.html';
+                }
 
             });
         });

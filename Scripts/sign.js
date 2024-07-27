@@ -10,6 +10,14 @@ class Account{
         this.user = user;
         this.email = email;
         this.password = password;
+        this.taskList = [];
+    }
+}
+
+class Task{
+    constructor(task, status){
+        this.task = task;
+        this.status = status;
     }
 }
 
@@ -18,6 +26,16 @@ function CreateAccount(user, email, password){
     AccountList.push(CreatedAccount);
     localStorage.setItem('AccountList', JSON.stringify(AccountList));
 }
+
+for (let i = 0; i < AccountList.length; i++){
+    if (!AccountList[i].user == 'Admin'){
+        CreateAccount('Admin', 'Admin@gmail.com', 'Admin123');
+    }
+}
+
+var newtask = new Task('Comer caca', 'Unfinished')
+
+LoggedAccount.taskList.push(newtask)
 
 function DeleteAccount(account){
     AccountList.splice(AccountList.indexOf(account), 1);
