@@ -27,15 +27,7 @@ function CreateAccount(user, email, password){
     localStorage.setItem('AccountList', JSON.stringify(AccountList));
 }
 
-for (let i = 0; i < AccountList.length; i++){
-    if (!AccountList[i].user == 'Admin'){
-        CreateAccount('Admin', 'Admin@gmail.com', 'Admin123');
-    }
-}
-
-var newtask = new Task('Comer caca', 'Unfinished')
-
-LoggedAccount.taskList.push(newtask)
+// CreateAccount('Admin', 'Admin@gmail.com', 'Admin123');
 
 function DeleteAccount(account){
     AccountList.splice(AccountList.indexOf(account), 1);
