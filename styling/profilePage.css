@@ -78,6 +78,12 @@ body.profile{
 
 }
 
+/* .Task_Checked{
+    background-color: var(--MainGreenColor) !important;
+    background-image: url('../Images/CheckMark.svg');
+    background-size: cover;
+} */
+
 .Task_Checked{
     background-color: var(--MainGreenColor) !important;
     background-image: url('../Images/CheckMark.svg');
