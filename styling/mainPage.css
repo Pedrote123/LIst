@@ -37,6 +37,9 @@ body{
     backdrop-filter: blur(5px);
     width: -webkit-fill-available;
 }
+.Header__NavBar--List *:hover{
+    color: rgb(71 142 74);
+}
 
 .Header__NavBar--List_Title{
     display: flex;
@@ -57,6 +60,9 @@ body{
     background-color: var(--MainGreenColor);
     color: var(--MainBrownColor);
     margin: auto;
+}
+.Header__NavBar--List_TaskAddition:hover{
+    color: rgb(244,244,244);
 }
 
 .Header__NavBar--List_SignIn, .Header__NavBar--List_SignUp{
@@ -229,9 +235,44 @@ body{
     border-radius: min(5vw, 30px);
     padding: min(2rem, 7vw);
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-#NewTask_FrameBackgroundFilter{
+#NewTask_Frame input{
+    width: 70%;
+}
+
+#NewTask_Frame input[type="text"]{
+    height: min(2.7rem, 10vw);
+    box-sizing: border-box;
+    border-radius: min(18px);
+    border: 2px solid var(--MainGreenColor);
+    background-color: rgb(230 242 230);
+    padding: 0 2rem;
+}
+
+#NewTask_Frame input[type="text"]:focus{
+    outline: 0;
+    border: 2px solid var(--MainGreenColor);
+    background-color: rgb(223 243 225);
+}
+
+#NewTask_Frame input[type='submit']{
+    font-family: 'Valken Regular';
+    font-size: min(25px, 4vw);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.20);
+    border: none;
+    background-color: var(--MainBrownColor);
+    color: var(--MainGreenColor);
+    border-radius: min(18px);
+    padding: 0.3rem 2rem;
+    margin-top: min(2rem, 5vw);
+}
+
+#FrameBackgroundFilter{
     position: fixed;
     height: 100%;
     width: 100%;

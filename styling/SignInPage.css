@@ -42,12 +42,19 @@
     background-color: var(--MainBrownColor) !important;
     color: var(--MainGreenColor);
 }
+.SignHeader__MainDisplay--Container_Form input[type='submit']:hover{
+    background-color: rgb(71 142 74) !important;
+    border-color: rgb(71 142 74) !important;
+}
 
 .SignHeader__MainDisplay--Container_Form input[type='button']{
     border-color: var(--MainGreenColor);
     background-color: var(--MainGreenColor);
     color: var(--MainBrownColor);
     margin-top: -20px;
+}
+.SignHeader__MainDisplay--Container_Form input[type='button']:hover{
+    color: rgb(244 244 244);
 }
 
 .SignHeader__MainDisplay--Container_Form p{

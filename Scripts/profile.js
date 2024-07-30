@@ -41,6 +41,7 @@ function TaskAddition(Task, Status){
     var TaskFrame = document.createElement('li');
     var Checkbox = document.createElement('span');
     var TaskToAdd = document.createElement('p');
+    var TaskDeletionCan = document.createElement('span');
 
     if (Status == 'Finished'){
         Checkbox.classList.add('Task_Checked');
@@ -49,8 +50,11 @@ function TaskAddition(Task, Status){
     ProfileTaskSection.appendChild(TaskFrame);
     TaskFrame.appendChild(Checkbox);
     TaskFrame.appendChild(TaskToAdd);
+    TaskFrame.appendChild(TaskDeletionCan);
 
     TaskToAdd.textContent = Task;
+
+    TaskDeletionCan.id = 'TaskDeletionCan'
 
 }
 
@@ -62,21 +66,17 @@ function TaskAdditionFilter(Status){
             TaskAddition(i.task, i.status)
         }
 
-    })
+    });
 
     ProfileTaskSection.childNodes.forEach((i)=>{
-        i.addEventListener('click', TaskChecking)
-    })
+        i.addEventListener('click', TaskClickingBehavior)
+    });
 
 }
 
-for (let i = 0; i < LoggedAccount.taskList.length; i++){
+TaskAdditionFilter('Unfinished')
 
-    TaskAdditionFilter('Unfinished')
-    
-}
-
-function TaskChecking(e){
+function TaskClickingBehavior(e){
 
     var SwitchTask_FromCurrentStatus = function(Status){
                 
@@ -93,7 +93,7 @@ function TaskChecking(e){
     };
 
     
-    if (e.target.tagName == 'SPAN'){
+    if (e.target.tagName == 'SPAN' && e.target.id != 'TaskDeletionCan'){
 
         if (CurrentTaskOptions[0].classList.contains('profileButtonSelected')){
             
@@ -114,6 +114,69 @@ function TaskChecking(e){
             setTimeout(()=>{
                 e.target.parentNode.remove();
             }, 500);
+        }
+    } else if (e.target.tagName == 'P'){
+
+        TaskText_Showing(e.target.textContent);
+
+    } else if (e.target.id == 'TaskDeletionCan'){
+
+        DeleteTask(e.target)
+
+    }
+}
+
+function TaskText_Showing(Text){
+
+    var Frame = document.createElement('div');
+    var FrameBackgroundFilter = document.createElement('div');
+    var TaskDescription = document.createElement('p');
+
+    TaskDescription.textContent = Text;
+
+    Frame.id = 'TaskText_Frame';
+    FrameBackgroundFilter.id = 'FrameBackgroundFilter';
+
+    Frame.appendChild(TaskDescription);
+    document.body.appendChild(Frame);
+    document.body.appendChild(FrameBackgroundFilter)
+
+    var ClickDetection = function (event){
+
+        if (event.target != Frame && event.target != TaskDescription){
+            Frame.remove();
+            FrameBackgroundFilter.remove();
+
+            document.removeEventListener('click', ClickDetection);
+        }
+
+    }
+
+    setTimeout(()=>{
+        document.addEventListener('click', ClickDetection);
+    }, 100)
+}
+
+function DeleteTask(e){
+
+    for (let i = 0; i < LoggedAccount.taskList.length; i++){
+        if (LoggedAccount.taskList[i].task == e.parentNode.childNodes[1].textContent){
+
+            LoggedAccount.taskList.splice(i, 1);
+            localStorage.setItem('LoggedAccount', JSON.stringify(LoggedAccount));
+
+            AccountList[AccountList.indexOf(LoggedAccount) + 1].taskList.splice(i, 1);
+            localStorage.setItem('AccountList', JSON.stringify(AccountList));
+
+            alert('Task deleted');
+
+            setTimeout(()=>{
+                e.parentNode.remove();
+
+                window.location.reload();
+            }, 500);
+
+            break;
         }
     }
 }

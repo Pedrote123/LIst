@@ -116,7 +116,7 @@ function NewTaskInput(){
     SubmitNewTaskButton.value = 'Add new task';
 
     Frame.id = 'NewTask_Frame';
-    FrameBackgroundFilter.id = 'NewTask_FrameBackgroundFilter';
+    FrameBackgroundFilter.id = 'FrameBackgroundFilter';
 
     Frame.appendChild(TaskDescription);
     Frame.appendChild(SubmitNewTaskButton);

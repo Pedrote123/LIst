@@ -66,23 +66,17 @@ body.profile{
     color: var(--MainGreenColor);
     padding: 0rem min(1rem, 2vw);
     border-radius: min(15px, 3vw);
+    overflow: hidden;
 }
 
-#Profile__MainBodySection--Container_TaskList li span{
-    display: flex;
+#Profile__MainBodySection--Container_TaskList li span:first-child{
     width: min(2.5rem, 7vw);
     height: 60%;
     border-radius: min(10px, 2vw);
     margin-right: min(1rem, 2vw);
     background-color: rgb(244 244 244);
-
+    flex-shrink: 0;
 }
-
-/* .Task_Checked{
-    background-color: var(--MainGreenColor) !important;
-    background-image: url('../Images/CheckMark.svg');
-    background-size: cover;
-} */
 
 .Task_Checked{
     background-color: var(--MainGreenColor) !important;
@@ -94,10 +88,40 @@ body.profile{
     margin: 0;
     font-size: min(30px, 5vw);
     letter-spacing: 0.1rem;
+    white-space: nowrap;
+}
+
+#TaskDeletionCan{
+    width: min(2.5rem, 7vw);
+    height: 60%;
+    border-radius: min(10px, 2vw);
+    margin-right: min(1rem, 2vw);
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+    flex-shrink: 0;
+    margin-left: auto;
+    background-image: url('../Images/Trashcan.svg');
+    background-size: cover;
 }
 
 @media screen and (max-width: 550px) {
     #Profile__MainBodySection--Container_TaskList li{
         flex-basis: 100%;
     }
+}
+
+#TaskText_Frame{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: min(30px, 5vw);
+    z-index: 10;
+    width: min(700px, 90%);
+    background-color: rgb(244,244,244);
+    border-radius: min(5vw, 30px);
+    box-sizing: border-box;
+    padding: min(2rem, 7vw);
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    text-align: center;
 }
