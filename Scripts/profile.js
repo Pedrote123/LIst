@@ -25,7 +25,35 @@ function CurrentTaskOptions_Buttons(){
 
         ProfileTaskSection.innerHTML = '';
 
-        TaskAdditionFilter(event.target.textContent);
+        if (event.target.textContent != 'Stadistics'){
+
+            TaskAdditionFilter(event.target.textContent);
+
+        } else if (event.target.textContent == 'Stadistics'){
+
+            var StadisticsDiv = document.createElement('div');
+            var StadisticsOfFinished = document.createElement('p');
+            var StadisticsMessage = document.createElement('p');
+
+            StadisticsDiv.id = 'StadisticsDiv';
+
+            var FinishedTasks = 0;
+
+            LoggedAccount.taskList.forEach((i)=>{
+                if (i.status == 'Finished'){
+                    FinishedTasks++
+                }
+            });
+
+            StadisticsOfFinished.textContent = `Finished tasks ${FinishedTasks}`;
+            StadisticsMessage.textContent = 'Soon more features';
+
+            ProfileTaskSection.appendChild(StadisticsDiv);
+            StadisticsDiv.appendChild(StadisticsOfFinished);
+            StadisticsDiv.appendChild(StadisticsMessage);
+
+        }
+        
     }
 
     CurrentTaskOptions.forEach((i)=>{

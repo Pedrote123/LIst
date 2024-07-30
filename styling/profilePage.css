@@ -125,3 +125,11 @@ body.profile{
     color: black;
     text-align: center;
 }
+
+#StadisticsDiv{
+    margin: auto;
+}
+
+#StadisticsDiv p{
+    margin-top: 2rem;
+}
